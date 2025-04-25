@@ -1,0 +1,15 @@
+<h1>Firewall Rules</h1>
+<form method="POST">
+  <input type="text" name="rule" placeholder="Enter iptables rule..." required>
+  <button type="submit">Add Rule</button>
+</form>
+
+<ul>
+  {% for rule in rules %}
+    <li>{{ rule }} 
+      <a href="{{ url_for('firewall.delete_rule', index=loop.index0) }}">Delete</a>
+    </li>
+  {% endfor %}
+</ul>
+
+<p><a href="/">Back</a></p>

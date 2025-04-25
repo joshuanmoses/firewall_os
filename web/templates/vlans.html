@@ -1,0 +1,17 @@
+<h1>VLANs</h1>
+<form method="POST">
+  <input type="text" name="parent" placeholder="Parent Interface (e.g., eth0)" required>
+  <input type="text" name="name" placeholder="VLAN Interface Name (e.g., eth0.10)" required>
+  <input type="number" name="vid" placeholder="VLAN ID (e.g., 10)" required>
+  <button type="submit">Add VLAN</button>
+</form>
+
+<ul>
+  {% for vlan in vlans %}
+    <li>{{ vlan.parent }} -> {{ vlan.name }} (ID {{ vlan.id }}) 
+      <a href="{{ url_for('vlan.delete_vlan', index=loop.index0) }}">Delete</a>
+    </li>
+  {% endfor %}
+</ul>
+
+<p><a href="/">Back</a></p>

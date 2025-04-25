@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-</head>
+ </head>
 <body>
 
 <h1>🔥 Firewall OS - Live Linux Firewall and IDS Platform</h1>
@@ -74,22 +74,63 @@ firewall_os/
 
 <h2>🛠 Building the Live ISO</h2>
 
-<ol>
-  <li>Prepare your root filesystem under <code>rootfs/</code> (kernel, initrd, Python, system binaries).</li>
-  <li>Install squashfs-tools:</li>
-  <pre><code>sudo apt install squashfs-tools</code></pre>
-  <li>Create the compressed filesystem:</li>
-  <pre><code>sudo mksquashfs rootfs/ filesystem.squashfs -comp xz -e boot</code></pre>
-  <li>Copy boot files (vmlinuz, initrd.img) and GRUB config to <code>iso/</code>.</li>
-  <li>Build the ISO:</li>
-  <pre><code>grub-mkrescue -o firewall_os.iso iso/</code></pre>
-</ol>
+<h3>1. Prepare the Root Filesystem</h3>
+<p>Build your minimal Linux filesystem inside a folder called <code>rootfs/</code>. This should include:</p>
+<ul>
+  <li>Kernel (<code>vmlinuz</code>) and initial ramdisk (<code>initrd.img</code>)</li>
+  <li>Python runtime and necessary libraries (Flask, etc.)</li>
+  <li>iptables, vlan tools, Suricata or Snort</li>
+  <li>All Python management scripts (firewall, VLAN, IDS managers)</li>
+</ul>
+
+<h3>2. Install SquashFS Tools</h3>
+
+<pre><code>sudo apt update
+sudo apt install squashfs-tools
+</code></pre>
+
+<h3>3. Create filesystem.squashfs</h3>
+
+<p>Use <strong>mksquashfs</strong> to compress your <code>rootfs/</code> into a SquashFS image:</p>
+
+<pre><code>
+sudo mksquashfs rootfs/ filesystem.squashfs -comp xz -e boot
+</code></pre>
+
+<ul>
+  <li><strong>rootfs/</strong>: the folder containing your Linux filesystem.</li>
+  <li><strong>filesystem.squashfs</strong>: the compressed filesystem image needed for live boot.</li>
+  <li><strong>-comp xz</strong>: use xz compression for smaller image size.</li>
+  <li><strong>-e boot</strong>: exclude the boot directory (it must stay separate).</li>
+</ul>
+
+<h3>4. Assemble ISO Directory Structure</h3>
+
+<p>Create a directory called <code>iso/</code> and copy the necessary components:</p>
+
+<pre><code>
+mkdir -p iso/boot/grub
+cp boot/grub.cfg iso/boot/grub/grub.cfg
+cp boot/vmlinuz iso/boot/vmlinuz
+cp boot/initrd.img iso/boot/initrd.img
+cp filesystem.squashfs iso/
+</code></pre>
+
+<h3>5. Build the ISO Image</h3>
+
+<p>Use GRUB to create the bootable ISO:</p>
+
+<pre><code>
+grub-mkrescue -o firewall_os.iso iso/
+</code></pre>
+
+<p>The output <code>firewall_os.iso</code> is now ready to be burned to a USB drive or run in a virtual machine.</p>
 
 <hr>
 
 <h2>📡 Running the Web Interface</h2>
 
-<p>Boot into Firewall OS, then start the Flask web interface:</p>
+<p>Once the system boots, you can start the Flask Web Interface:</p>
 
 <pre><code>python3 web/app.py</code></pre>
 
@@ -99,10 +140,8 @@ firewall_os/
 
 <h3>Web Interface Features:</h3>
 <ul>
-  <li>View and manage firewall rules</li>
-  <li>Add and delete iptables rules</li>
-  <li>View and manage VLANs</li>
-  <li>Create and remove VLAN interfaces dynamically</li>
+  <li>View, add, and delete firewall rules</li>
+  <li>View, add, and delete VLAN configurations</li>
 </ul>
 
 <hr>
@@ -131,10 +170,10 @@ firewall_os/
 
 <ul>
   <li>Add basic authentication to web interface (Flask-Login)</li>
-  <li>Add real-time IDS alert viewing through the web interface</li>
-  <li>Implement VPN server integration (WireGuard, OpenVPN)</li>
-  <li>Centralized logging dashboard (Elastic Stack or lightweight viewer)</li>
-  <li>Support for High Availability (HA) setups with active/passive nodes</li>
+  <li>Display IDS alerts in the web dashboard</li>
+  <li>VPN server integration (WireGuard, OpenVPN)</li>
+  <li>HA (High Availability) support with node clustering</li>
+  <li>Cloud-based centralized logging support</li>
 </ul>
 
 <hr>
@@ -142,16 +181,16 @@ firewall_os/
 <h2>🏆 Skills Demonstrated</h2>
 
 <ul>
-  <li>Custom Live Linux OS Development</li>
-  <li>Firewall and IDS Configuration Automation</li>
-  <li>Python Service Daemon Architecture</li>
-  <li>SquashFS and Live ISO Building</li>
-  <li>GRUB Bootloader Customization</li>
-  <li>Flask Web Development for Infrastructure Management</li>
-  <li>Network Security Engineering (VLAN, IDS, Firewall)</li>
+  <li>Linux Live OS Customization and Building</li>
+  <li>Secure Network Architecture and Firewall Management</li>
+  <li>Python System Service Development</li>
+  <li>Web Development with Flask and Jinja2</li>
+  <li>Filesystem Compression and SquashFS Management</li>
+  <li>GRUB Bootloader Configuration for Live Systems</li>
 </ul>
 
 <hr>
+
 
 <h2>👨‍💻 Author</h2>
 

@@ -7,4 +7,4 @@ logger = setup_logger(__name__)
 def run():
     while True:
         setup_vlans()
-        time.sleep(300)  # Check VLANs every 5 minutes
+        time.sleep(300)

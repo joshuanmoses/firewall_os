@@ -7,4 +7,4 @@ logger = setup_logger(__name__)
 def run():
     start_ids()
     while True:
-        time.sleep(600)  # Let IDS handle alerts separately
+        time.sleep(600)

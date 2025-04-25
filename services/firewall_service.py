@@ -7,5 +7,5 @@ logger = setup_logger(__name__)
 def run():
     while True:
         apply_firewall_rules()
-        time.sleep(60)  # Reload every 60 seconds
+        time.sleep(60)
 
